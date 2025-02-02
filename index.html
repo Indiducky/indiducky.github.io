@@ -9,21 +9,22 @@
             font-family: "Courier New", monospace;
             text-align: left;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
         .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid layout */
+            gap: 10px; /* Space between images */
+            padding: 20px;
         }
         .gallery img {
-            width: 30%; /* Responsive width */
-            height: 200px; /* Fixed height */
-            object-fit: contain; /* Ensure the entire image is visible without cropping */
-            margin: 10px;
+            width: 100%; /* Make images fill their grid item */
+            height: auto; /* Maintain aspect ratio */
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            user-drag: none; /* Prevent image dragging */
-            pointer-events: none; /* Prevent interaction */
+            user-drag: none;
+            pointer-events: none;
         }
     </style>
     <script>
