@@ -16,8 +16,9 @@
             justify-content: center;
         }
         .gallery img {
-            width: 30%; /* Make images responsive */
-            height: auto; /* Keep image's aspect ratio */
+            width: 30%; /* Responsive width */
+            height: 200px; /* Fixed height to avoid stretching */
+            object-fit: cover; /* Maintain aspect ratio and cover the box */
             margin: 10px;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
