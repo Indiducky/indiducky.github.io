@@ -16,23 +16,25 @@
             justify-content: center;
         }
         .gallery img {
-            width: 30%;
-            height: 30%;
+            width: 30%; /* Adjusted to make images more responsive */
+            height: auto; /* Keep image aspect ratio */
             margin: 10px;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            user-drag: none;
+            user-drag: none; /* Prevent image dragging */
+            pointer-events: none; /* Prevent interaction */
         }
     </style>
     <script>
-    document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-    });
-</script>
+        // Disable right-click context menu (prevent image saving)
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
 </head>
 <body>
     <h1>STANKYLEG</h1>
-    <p> By Indigo</p>
+    <p>By Indigo</p>
     
     <div class="gallery">
         <img src="images/DSCF7466 Edited.JPG" alt="Photo 1">
