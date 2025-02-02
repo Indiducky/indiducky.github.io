@@ -21,8 +21,14 @@
             margin: 10px;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            user-drag: none;
         }
     </style>
+    <script>
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+</script>
 </head>
 <body>
     <h1>STANKYLEG</h1>
