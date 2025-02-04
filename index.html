@@ -14,29 +14,30 @@
         }
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid layout */
-            gap: 10px; /* Space between images */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid */
+            grid-auto-flow: dense; /* Allows dynamic layout adjustments */
+            gap: 15px; /* Increased gap to prevent x-axis overlap */
             padding: 20px;
         }
         .gallery img {
-            width: 100%; /* Make images fill their grid item */
+            width: 100%; /* Fill container */
             height: auto; /* Maintain aspect ratio */
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
-            user-drag: none; /* Prevent dragging */
-            -webkit-user-drag: none; /* Prevent dragging on Safari */
-            position: relative; /* Allows shifting when hovered */
+            user-drag: none;
+            -webkit-user-drag: none;
+            position: relative;
         }
         .gallery img:hover {
-            transform: scale(1.1); /* Enlarge image by 10% */
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3); /* Increase shadow */
-            z-index: 10; /* Bring hovered image to the front */
+            transform: scale(1.1); /* Enlarge without overlapping */
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
         }
-        /* Shift surrounding images when one is hovered */
+        /* Shrink non-hovered images slightly to make space */
         .gallery:hover img:not(:hover) {
-            transform: translateY(10px); /* Move non-hovered images down slightly */
-            opacity: 0.9; /* Slight fade for effect */
+            transform: scale(0.95);
+            opacity: 0.9;
         }
     </style>
     <script>
