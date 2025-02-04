@@ -8,35 +8,31 @@
         body {
             font-family: "Courier New", monospace;
             text-align: left;
-            background-color: #FFFFE5;
-            margin: 10px;
+            background-color: #f4f4f4;
+            margin: 0;
             padding: 0;
         }
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid layout */
-            gap: 10px; /* Space between images */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
             padding: 20px;
         }
         .gallery img {
-    width: 100%; /* Make images fill their grid item */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    user-drag: none;
-    pointer-events: none;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
-}
-
-.gallery img:hover {
-    transform: scale(1.1); /* Enlarges image by 10% */
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3); /* Increases shadow for effect */
-}
-
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            user-drag: none;
+            pointer-events: none;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
         }
     </style>
     <script>
-        // Disable right-click context menu (prevent image saving)
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
@@ -50,7 +46,6 @@
         <img src="images/DSCF7466 Edited.JPG" alt="Photo 1">
         <img src="images/DSCF7587.JPG" alt="Photo 2">
         <img src="images/DSCF7590.JPG" alt="Photo 3">
-        <img src="images/R1-02089-0014.JPEG" alt="Photo 4">
     </div>
 </body>
 </html>
