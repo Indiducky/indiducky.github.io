@@ -40,10 +40,17 @@
             opacity: 0.9;
         }
     </style>
+    <script src="images.js"></script>
     <script>
-        // Disable right-click context menu (prevent image saving)
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
+        document.addEventListener("DOMContentLoaded", function () {
+            const gallery = document.querySelector(".gallery");
+
+            imageFiles.forEach(file => {
+                let img = document.createElement("img");
+                img.src = "images/" + file;
+                img.alt = "Photo";
+                gallery.appendChild(img);
+            });
         });
     </script>
 </head>
@@ -51,10 +58,6 @@
     <h1>STANKYLEG</h1>
     <p>By Indigo</p>
     
-    <div class="gallery">
-        <img src="images/DSCF7466 Edited.JPG" alt="Photo 1">
-        <img src="images/DSCF7587.JPG" alt="Photo 2">
-        <img src="images/DSCF7590.JPG" alt="Photo 3">
-    </div>
+    <div class="gallery"></div>
 </body>
 </html>
