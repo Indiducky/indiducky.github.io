@@ -8,7 +8,7 @@
         body {
             font-family: "Courier New", monospace; /* Retro font */
             text-align: center;
-            background: linear-gradient(90deg, #000, #444, #000); /* Black and white gradient */
+            background: url('https://www.transparenttextures.com/patterns/checkered-light.png'); /* Checkerboard pattern */ /* Black and white gradient */
             background-size: 400% 400%;
             animation: bgAnimation 8s infinite alternate;
             color: #fff;
@@ -23,8 +23,7 @@
             font-family: "Impact", sans-serif;
             font-size: 3rem;
             text-transform: uppercase;
-            text-shadow: 3px 3px #fff, -3px -3px #000;
-            animation: glitch 0.8s infinite alternate;
+            color: #000; /* Black title */
         }
         @keyframes glitch {
             0% { transform: skewX(5deg); }
@@ -39,7 +38,7 @@
             width: 100%; /* Makes images fill column width */
             height: auto; /* Maintains aspect ratio */
             border-radius: 10px;
-            border: 3px solid #fff; /* White border */
+             /* White border */
             box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
             user-drag: none;
@@ -51,7 +50,7 @@
         }
         .gallery img:hover {
             transform: scale(1.1) rotate(-2deg); /* Slight tilt on hover */
-            border-color: #aaa; /* Subtle grey border on hover */
+             /* Subtle grey border on hover */
             box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3);
             z-index: 10;
         }
