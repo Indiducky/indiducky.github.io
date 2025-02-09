@@ -91,6 +91,10 @@
                 let img = document.createElement("img");
                 img.src = "images/" + file;
                 img.alt = "Photo";
+                img.loading = "lazy"; // Enable lazy loading
+                let img = document.createElement("img");
+                img.src = "images/" + file;
+                img.alt = "Photo";
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
                     modal.classList.add("active");
@@ -105,9 +109,11 @@
     </script>
 </head>
 <body>
+    <div style="padding: 10px;">
     <h1>STANKYLEG</h1>
     <p>By Indigo</p>
     
     <div class="gallery"></div>
+    </div>
 </body>
 </html>
