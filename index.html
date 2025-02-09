@@ -8,16 +8,15 @@
         body {
             font-family: "Courier New", monospace; /* Retro font */
             text-align: center;
-            background: repeating-conic-gradient(#000 0% 25%, #fff 25% 50%) 0 0 / 10px 10px;
+            background: repeating-linear-gradient(45deg, #000 0px, #000 10px, #fff 10px, #fff 20px);
             background-size: 50px 50px; /* Adjust tile size for visibility */ /* Checkerboard pattern */ /* Black and white gradient */
             background-size: 400% 400%;
-            animation: bgAnimation 8s infinite alternate;
+            
             color: #fff;
             margin: 0;
             padding: 0;
         }
-        @keyframes bgAnimation {
-            0% { background-position: 0% 50%; }
+        
             100% { background-position: 100% 50%; }
         }
         h1 {
