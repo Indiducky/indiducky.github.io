@@ -1,45 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STANKYLEG</title>
-    <style>
-        body {
-            font-family: "Courier New", monospace;
-            text-align: left;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid */
-            grid-auto-flow: dense; /* Allows dynamic layout adjustments */
-            gap: 15px; /* Increased gap to prevent x-axis overlap */
-            padding: 20px;
-        }
-        .gallery img {
-            width: 100%; /* Fill container */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
-            user-drag: none;
-            -webkit-user-drag: none;
-            position: relative;
-            cursor: pointer; /* Indicate clickability */
-        }
-        .gallery img:hover {
-            transform: scale(1.1); /* Enlarge without overlapping */
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-        }
-        /* Shrink non-hovered images slightly to make space */
-        .gallery:hover img:not(:hover) {
-            transform: scale(0.95);
-            opacity: 0.9;
-        }
+
         /* Fullscreen modal styles */
         .modal {
             display: none;
@@ -67,14 +26,25 @@
         document.addEventListener("DOMContentLoaded", function () {
             const imageFiles = [
                 "2TDXMeY8.jpeg",
-                "DSCF7466 Edited.JPG",
-                "DSCF7587.JPG",
-                "DSCF7590.JPG",
                 "HO3hKUzI.jpeg",
                 "iGTjj7wg.jpeg",
                 "MaxspS5I.jpeg",
                 "oPFnLqOY.jpeg",
-                "R1-02089-0014.JPEG"
+                "R1-02089-0014.JPEG",
+                "u-yKrfnY.jpeg",
+                "JyK21jKU.jpeg",
+                "nLWlXSUc.jpeg",
+                "SjuUGldM.jpeg",
+                "qVPbXMno.jpeg",
+                "bkWweT-U.jpeg",
+                "qZ64hPi4.jpeg",
+                "s5t_gCQs.jpeg",
+                "fIFTLJxY.jpeg",
+                "sff4JKqo.jpeg",
+                "DSCF7466 Edited.JPG",
+                "R1-02089-0016.JPEG",
+                "R1-02089-0001.JPEG",
+                "R1-02089-0000.JPEG"
             ];
             const gallery = document.querySelector(".gallery");
             const modal = document.createElement("div");
