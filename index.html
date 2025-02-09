@@ -6,11 +6,29 @@
     <title>STANKYLEG</title>
     <style>
         body {
-            font-family: "Courier New", monospace;
-            text-align: left;
-            background-color: #f4f4f4;
+            font-family: "Comic Sans MS", "Courier New", monospace; /* Fun retro font */
+            text-align: center;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 400% 400%;
+            animation: bgAnimation 8s infinite alternate;
+            color: #fff;
             margin: 0;
             padding: 0;
+        }
+        @keyframes bgAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        h1 {
+            font-family: "Impact", sans-serif;
+            font-size: 3rem;
+            text-transform: uppercase;
+            text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff;
+            animation: glitch 0.8s infinite alternate;
+        }
+        @keyframes glitch {
+            0% { transform: skewX(5deg); }
+            100% { transform: skewX(-5deg); }
         }
         .gallery {
             column-count: 3; /* Creates a masonry effect */
@@ -21,6 +39,7 @@
             width: 100%; /* Makes images fill column width */
             height: auto; /* Maintains aspect ratio */
             border-radius: 10px;
+            border: 3px solid #ff00ff; /* Bright neon pink border */
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
             user-drag: none;
@@ -31,7 +50,8 @@
             margin-bottom: 15px;
         }
         .gallery img:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-2deg); /* Slight tilt on hover */
+            border-color: #00ffff; /* Change color on hover */
             box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 10;
         }
@@ -92,8 +112,6 @@
                 img.src = "images/" + file;
                 img.alt = "Photo";
                 img.loading = "lazy";
-                img.src = "images/" + file;
-                img.alt = "Photo";
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
                     modal.classList.add("active");
@@ -108,10 +126,10 @@
     </script>
 </head>
 <body>
+    <marquee behavior="alternate" scrollamount="6">Welcome to the STANKYLEG Web Experience!</marquee>
     <div style="padding: 10px;">
     <h1>STANKYLEG</h1>
     <p>By Indigo</p>
-    
     <div class="gallery"></div>
     </div>
 </body>
