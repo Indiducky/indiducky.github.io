@@ -12,7 +12,7 @@
             background-size: 50px 50px; /* Adjust tile size for visibility */ /* Checkerboard pattern */ /* Black and white gradient */
             background-size: 400% 400%;
             
-            color: #fff;
+            color: #000;
              /* Black outline */
             margin: 0;
             padding: 0;
@@ -32,7 +32,8 @@
             100% { transform: skewX(-5deg); }
         }
         .gallery {
-            column-count: 3; /* Creates a masonry effect */
+            column-count: 3;
+            position: relative; /* Creates a masonry effect */
             column-gap: 15px;
             padding: 20px;
         }
@@ -55,6 +56,7 @@
              /* Subtle grey border on hover */
             box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3);
             z-index: 10;
+            position: relative;
         }
         .modal {
             display: none;
