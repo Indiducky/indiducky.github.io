@@ -16,9 +16,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             grid-auto-flow: dense;
+            grid-template-rows: masonry; /* CSS Masonry for modern browsers */
             gap: 15px;
             padding: 20px;
-            align-items: start; /* Ensures images align properly without gaps */
         }
         .gallery img {
             width: 100%;
@@ -55,6 +55,18 @@
         }
         .modal.active {
             display: flex;
+        }
+        /* Fallback for browsers that don't support masonry */
+        @supports not (grid-template-rows: masonry) {
+            .gallery {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            .gallery img {
+                width: calc(33.333% - 10px); /* Adjust width for flexbox fallback */
+            }
         }
     </style>
     <script>
