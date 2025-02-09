@@ -6,55 +6,39 @@
     <title>STANKYLEG</title>
     <style>
         body {
-            font-family: "Courier New", monospace; /* Retro font */
+            font-family: "Courier New", monospace;
             text-align: center;
             background: #fff;
-            background-size: 50px 50px; /* Adjust tile size for visibility */ /* Checkerboard pattern */ /* Black and white gradient */
-            background-size: 400% 400%;
-            
             color: #000;
-             /* Black outline */
             margin: 0;
             padding: 0;
-        }
-        
-            100% { background-position: 100% 50%; }
         }
         h1 {
             font-family: "Impact", sans-serif;
             font-size: 3rem;
             text-transform: uppercase;
-            color: #000; /* Black title */
-             /* White outline */
-        }
-        @keyframes glitch {
-            0% { transform: skewX(5deg); }
-            100% { transform: skewX(-5deg); }
+            color: #000;
         }
         .gallery {
             column-count: 3;
-            position: relative; /* Creates a masonry effect */
             column-gap: 15px;
             padding: 20px;
         }
         .gallery img {
-            width: 100%; /* Makes images fill column width */
-            height: auto; /* Maintains aspect ratio */
+            width: 100%;
+            height: auto;
             border-radius: 10px;
-             /* White border */
-            box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
             user-drag: none;
             -webkit-user-drag: none;
-            position: relative;
             cursor: pointer;
-            break-inside: avoid; /* Prevents images from breaking between columns */
+            break-inside: avoid;
             margin-bottom: 15px;
         }
         .gallery img:hover {
-            transform: scale(1.1) rotate(-2deg); /* Slight tilt on hover */
-             /* Subtle grey border on hover */
-            box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 10;
             position: relative;
         }
