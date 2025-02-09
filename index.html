@@ -8,11 +8,18 @@
         body {
             font-family: "Courier New", monospace; /* Retro font */
             text-align: center;
-            background: repeating-linear-gradient(45deg, #000 0px, #000 10px, #fff 10px, #fff 20px);
+            background: repeating-linear-gradient(
+                0deg,
+                #000 0px, #000 10px, #fff 10px, #fff 20px
+            ), repeating-linear-gradient(
+                90deg,
+                #000 0px, #000 10px, #fff 10px, #fff 20px
+            );
             background-size: 50px 50px; /* Adjust tile size for visibility */ /* Checkerboard pattern */ /* Black and white gradient */
             background-size: 400% 400%;
             
             color: #fff;
+            text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; /* Black outline */
             margin: 0;
             padding: 0;
         }
@@ -24,6 +31,7 @@
             font-size: 3rem;
             text-transform: uppercase;
             color: #000; /* Black title */
+            text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff, 2px -2px 0px #fff, -2px 2px 0px #fff; /* White outline */
         }
         @keyframes glitch {
             0% { transform: skewX(5deg); }
