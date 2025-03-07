@@ -114,6 +114,38 @@
             modal.classList.add("modal");
             const modalImg = document.createElement("img");
             modal.appendChild(modalImg);
+            const controlsDiv = document.createElement("div");
+            controlsDiv.classList.add("modal-controls");
+
+            const prevButton = document.createElement("button");
+            prevButton.textContent = "Previous";
+            prevButton.classList.add("control-button");
+            prevButton.addEventListener("click", function () {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                updateModalImage();
+            });
+
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "Next";
+            nextButton.classList.add("control-button");
+            nextButton.addEventListener("click", function () {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                updateModalImage();
+            });
+
+            const rotateButton = document.createElement("button");
+            rotateButton.textContent = "Rotate";
+            rotateButton.classList.add("control-button");
+            let rotation = 0;
+            rotateButton.addEventListener("click", function () {
+                rotation = (rotation + 90) % 360;
+                modalImg.style.transform = `rotate(${rotation}deg)`;
+            });
+
+            controlsDiv.appendChild(prevButton);
+            controlsDiv.appendChild(rotateButton);
+            controlsDiv.appendChild(nextButton);
+            modal.appendChild(controlsDiv);
             document.body.appendChild(modal);
 
             const imageFiles = [
@@ -125,7 +157,15 @@
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
             
-            imageFiles.forEach(file => {
+            let currentIndex = 0;
+
+            function updateModalImage() {
+                modalImg.src = "images/" + imageFiles[currentIndex];
+                rotation = 0;
+                modalImg.style.transform = "rotate(0deg)";
+            }
+
+            imageFiles.forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
@@ -142,13 +182,17 @@
                 finderContent.appendChild(item);
                 
                 img.addEventListener("click", function () {
+                    currentIndex = index;
+                    updateModalImage();
                     modalImg.src = this.src;
                     modal.classList.add("active");
                 });
             });
             
-            modal.addEventListener("click", function () {
-                modal.classList.remove("active");
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.classList.remove("active");
+                }
             });
         });
     </script>
