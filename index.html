@@ -3,65 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STANKYLEG</title>
+    <title>stankyleg</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         body {
-            font-family: "MingLiU", serif;
+            font-family: 'VT323', sans-serif;
             text-align: center;
-            background: #fff;
+            background: repeating-linear-gradient(
+                45deg,
+                #ccc,
+                #ccc 10px,
+                #ddd 10px,
+                #ddd 20px
+            );
             color: #000;
             margin: 0;
             padding: 0;
+            cursor: url('https://cur.cursors-4u.net/cursors/cur-1/cur34.cur'), auto;
         }
         h1 {
-            font-family: "MingLiU", serif;
             font-size: 3rem;
-            text-transform: uppercase;
+            text-transform: lowercase;
             color: #000;
         }
         .finder-container {
+            position: absolute;
+            top: 50px;
+            left: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 80%;
             margin: auto;
             background: #d9d9d9;
-            border: 2px solid #000;
+            border: 3px solid #000;
             padding: 10px;
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+            cursor: move;
         }
-        .finder-toolbar {
+        .finder-titlebar {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             background: #c0c0c0;
             padding: 5px;
             border-bottom: 2px solid #000;
+            width: 100%;
+            cursor: grab;
         }
-        .finder-content {
+        .finder-buttons {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            padding: 10px;
+            gap: 4px;
+            margin-right: 8px;
         }
-        .finder-item {
-            width: 120px;
-            text-align: center;
-            margin: 10px;
+        .finder-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            display: inline-block;
         }
-        .finder-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 2px solid #000;
-            background: #fff;
-            padding: 5px;
-        }
-        .finder-item span {
-            display: block;
-            font-size: 12px;
-            margin-top: 5px;
-            color: #000;
-        }
+        .close { background: red; }
+        .minimize { background: yellow; }
+        .maximize { background: green; }
         .modal {
             display: none;
             position: fixed;
@@ -79,151 +82,53 @@
             max-width: 80%;
             max-height: 80%;
             border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .modal.active {
-            display: flex;
         }
         .modal-controls {
             display: flex;
             gap: 10px;
             margin-top: 20px;
-            position: relative;
-            z-index: 10;
         }
         .control-button {
             padding: 8px 12px;
             background: #c0c0c0;
             border: 2px solid #000;
             cursor: pointer;
-            font-family: "MingLiU", serif;
-        }
-        .control-button:hover {
-            background: #a0a0a0;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.addEventListener("keydown", function (event) {
-                if (modal.classList.contains("active")) {
-                    if (event.key === "ArrowRight") {
-                        currentIndex = (currentIndex + 1) % imageFiles.length;
-                        updateModalImage();
-                    } else if (event.key === "ArrowLeft") {
-                        currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-                        updateModalImage();
-                    }
+            const finder = document.querySelector('.finder-container');
+            let isDragging = false, offsetX, offsetY;
+
+            finder.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                offsetX = e.clientX - finder.offsetLeft;
+                offsetY = e.clientY - finder.offsetTop;
+            });
+            document.addEventListener('mousemove', function (e) {
+                if (isDragging) {
+                    finder.style.left = `${e.clientX - offsetX}px`;
+                    finder.style.top = `${e.clientY - offsetY}px`;
                 }
             });
-            const imageFiles = [
-                "2TDXMeY8.webp",
-                "000049310011.webp",
-                "000049310016.webp",
-                "000049310022.webp",
-                "000049310028.webp",
-                "000049310029.webp",
-                "000049310033.webp",
-                "bkWweT-U.webp",
-                "fIFTLJxY.webp",
-                "HO3hKUzI.webp",
-                "iGTjj7wg.webp",
-                "JyK21jKU.webp",
-                "MaxspS5I.webp",
-                "nLWlXSUc.webp",
-                "oPFnLqOY.webp",
-                "pgx8bAXY.webp",
-                "qVPbXMno.webp",
-                "qZ64hPi4.webp",
-                "s5t_gCQs.webp",
-                "sff4JKqo.webp",
-                "SjuUGldM.webp",
-                "u-yKrfnY.webp"
-            ];
-            
-            let currentIndex = 0;
-            let rotation = 0;
-            const finderContent = document.querySelector(".finder-content");
-            const modal = document.createElement("div");
-            modal.classList.add("modal");
-            const modalImg = document.createElement("img");
-            const controlsDiv = document.createElement("div");
-            controlsDiv.classList.add("modal-controls");
-
-            const prevButton = document.createElement("button");
-            prevButton.textContent = "Previous";
-            prevButton.classList.add("control-button");
-            prevButton.addEventListener("click", function () {
-                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-                updateModalImage();
-            });
-
-            const nextButton = document.createElement("button");
-            nextButton.textContent = "Next";
-            nextButton.classList.add("control-button");
-            nextButton.addEventListener("click", function () {
-                currentIndex = (currentIndex + 1) % imageFiles.length;
-                updateModalImage();
-            });
-
-            const rotateButton = document.createElement("button");
-            rotateButton.textContent = "Rotate";
-            rotateButton.classList.add("control-button");
-            rotateButton.addEventListener("click", function () {
-                rotation = (rotation + 90) % 360;
-                modalImg.style.transform = `rotate(${rotation}deg)`;
-            });
-
-            function updateModalImage() {
-                modalImg.src = "images/" + imageFiles[currentIndex];
-                rotation = 0;
-                modalImg.style.transform = "rotate(0deg)";
-            }
-
-            controlsDiv.appendChild(prevButton);
-            controlsDiv.appendChild(rotateButton);
-            controlsDiv.appendChild(nextButton);
-            modal.appendChild(modalImg);
-            modal.appendChild(controlsDiv);
-            document.body.appendChild(modal);
-
-            imageFiles.forEach((file, index) => {
-                let item = document.createElement("div");
-                item.classList.add("finder-item");
-                
-                let img = document.createElement("img");
-                img.src = "images/" + file;
-                img.alt = file;
-                img.loading = "lazy";
-                
-                let label = document.createElement("span");
-                label.textContent = file;
-                
-                item.appendChild(img);
-                item.appendChild(label);
-                
-                img.addEventListener("click", function () {
-                    currentIndex = index;
-                    updateModalImage();
-                    modal.classList.add("active");
-                });
-                
-                finderContent.appendChild(item);
-            });
-
-            modal.addEventListener("click", function (event) {
-                if (event.target === modal) {
-                    modal.classList.remove("active");
-                }
-            });
+            document.addEventListener('mouseup', function () { isDragging = false; });
         });
     </script>
 </head>
 <body>
+    <div class="loading-indicator"></div>
     <div style="padding: 10px;">
         <h1>stankyleg</h1>
         <p>By Indigo</p>
         <div class="finder-container">
-            <div class="finder-toolbar">Finder - Images</div>
+            <div class="finder-titlebar">
+                <div class="finder-buttons">
+                    <div class="finder-button close"></div>
+                    <div class="finder-button minimize"></div>
+                    <div class="finder-button maximize"></div>
+                </div>
+                <span>Finder - Images</span>
+            </div>
             <div class="finder-content"></div>
         </div>
     </div>
