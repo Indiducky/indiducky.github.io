@@ -28,7 +28,7 @@
         }
         .gallery img {
             width: auto;
-            max-width: 30%; /* Ensures multiple images fit in a row */
+            max-width: 30%;
             height: auto;
             object-fit: cover;
             border-radius: 10px;
@@ -43,6 +43,9 @@
             transform: scale(1.1);
             box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 10;
+        }
+        .rotate-90 {
+            transform: rotate(90deg);
         }
         .modal {
             display: none;
@@ -63,9 +66,6 @@
         }
         .modal.active {
             display: flex;
-        }
-            .rotate-90 {
-            transform: rotate(90deg);
         }
     </style>
     <script>
@@ -94,6 +94,16 @@
                 "SjuUGldM.webp",
                 "u-yKrfnY.webp"
             ];
+            const rotatedImages = [
+                "000049310016.webp",
+                "000049310022.webp",
+                "000049310028.webp",
+                "000049310029.webp",
+                "000049310033.webp",
+                "JyK21jKU.webp",
+                "pgx8bAXY.webp"
+            ];
+            
             const gallery = document.querySelector(".gallery");
             const modal = document.createElement("div");
             modal.classList.add("modal");
@@ -107,57 +117,10 @@
                 img.alt = "Photo";
                 img.loading = "lazy";
 
-                // Apply rotation for specific images
-                const rotatedImages = [
-                    "000049310016.webp",
-                    "000049310022.webp",
-                    "000049310028.webp",
-                    "000049310029.webp",
-                    "000049310033.webp",
-                    "JyK21jKU.webp",
-                    "pgx8bAXY.webp"
-                ];
-
                 if (rotatedImages.includes(file)) {
                     img.classList.add("rotate-90");
                 }
 
-                img.addEventListener("click", function () {
-                    modalImg.src = this.src;
-                    modal.classList.add("active");
-                });
-                gallery.appendChild(img);
-            });
-                let img = document.createElement("img");
-                img.src = "images/" + file;
-                img.alt = "Photo";
-                img.loading = "lazy";
-
-                // Apply rotation for specific images
-                const rotatedImages = [
-                    "000049310016.webp",
-                    "000049310022.webp",
-                    "000049310028.webp",
-                    "000049310029.webp",
-                    "000049310033.webp",
-                    "JyK21jKU.webp",
-                    "pgx8bAXY.webp"
-                ];
-
-                if (rotatedImages.includes(file)) {
-                    img.classList.add("rotate-90");
-                }
-
-                img.addEventListener("click", function () {
-                    modalImg.src = this.src;
-                    modal.classList.add("active");
-                });
-                gallery.appendChild(img);
-            });
-                let img = document.createElement("img");
-                img.src = "images/" + file;
-                img.alt = "Photo";
-                img.loading = "lazy";
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
                     modal.classList.add("active");
