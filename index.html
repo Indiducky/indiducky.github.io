@@ -19,29 +19,48 @@
             text-transform: uppercase;
             color: #000;
         }
-        .gallery {
+        .finder-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            margin: auto;
+            background: #d9d9d9;
+            border: 2px solid #000;
+            padding: 10px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .finder-toolbar {
+            display: flex;
+            justify-content: space-between;
+            background: #c0c0c0;
+            padding: 5px;
+            border-bottom: 2px solid #000;
+        }
+        .finder-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px;
+            justify-content: flex-start;
+            padding: 10px;
         }
-        .gallery img {
-            width: auto;
-            max-width: 30%;
-            height: auto;
+        .finder-item {
+            width: 120px;
+            text-align: center;
+            margin: 10px;
+        }
+        .finder-item img {
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
-            user-drag: none;
-            -webkit-user-drag: none;
-            cursor: pointer;
-            position: relative;
+            border: 2px solid #000;
+            background: #fff;
+            padding: 5px;
         }
-        .gallery img:hover {
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 10;
+        .finder-item span {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #000;
         }
         .rotate-90 {
             transform: rotate(-90deg);
@@ -107,7 +126,7 @@
                 "pgx8bAXY.webp"
             ];
             
-            const gallery = document.querySelector(".gallery");
+            const finderContent = document.querySelector(".finder-content");
             const modal = document.createElement("div");
             modal.classList.add("modal");
             const modalImg = document.createElement("img");
@@ -115,15 +134,24 @@
             document.body.appendChild(modal);
 
             imageFiles.forEach(file => {
+                let item = document.createElement("div");
+                item.classList.add("finder-item");
+                
                 let img = document.createElement("img");
                 img.src = "images/" + file;
-                img.alt = "Photo";
+                img.alt = file;
                 img.loading = "lazy";
-
+                
                 if (rotatedImages.includes(file)) {
                     img.classList.add("rotate-90");
                 }
-
+                
+                let label = document.createElement("span");
+                label.textContent = file;
+                
+                item.appendChild(img);
+                item.appendChild(label);
+                
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
                     if (rotatedImages.includes(file)) {
@@ -133,7 +161,8 @@
                     }
                     modal.classList.add("active");
                 });
-                gallery.appendChild(img);
+                
+                finderContent.appendChild(item);
             });
 
             modal.addEventListener("click", function () {
@@ -145,9 +174,12 @@
 </head>
 <body>
     <div style="padding: 10px;">
-    <h1>STANKYLEG</h1>
-    <p>By Indigo</p>
-    <div class="gallery"></div>
+        <h1>STANKYLEG</h1>
+        <p>By Indigo</p>
+        <div class="finder-container">
+            <div class="finder-toolbar">Finder - Images</div>
+            <div class="finder-content"></div>
+        </div>
     </div>
 </body>
 </html>
