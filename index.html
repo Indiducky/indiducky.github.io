@@ -75,6 +75,35 @@
             padding: 5px;
             cursor: pointer;
         }
+            .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .modal img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+        .modal-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .control-button {
+            padding: 8px 12px;
+            background: #c0c0c0;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -120,6 +149,88 @@
         });
         document.addEventListener("dragstart", function (event) {
             event.preventDefault();
+        });
+            const modal = document.createElement("div");
+        modal.classList.add("modal");
+        const modalImg = document.createElement("img");
+        const controlsDiv = document.createElement("div");
+        controlsDiv.classList.add("modal-controls");
+
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "Previous";
+        prevButton.classList.add("control-button");
+        prevButton.addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+            updateModalImage();
+        });
+
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Next";
+        nextButton.classList.add("control-button");
+        nextButton.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % imageFiles.length;
+            updateModalImage();
+        });
+
+        const rotateButton = document.createElement("button");
+        rotateButton.textContent = "Rotate";
+        rotateButton.classList.add("control-button");
+        let rotation = 0;
+        rotateButton.addEventListener("click", function () {
+            rotation = (rotation + 90) % 360;
+            modalImg.style.transform = `rotate(${rotation}deg)`;
+        });
+
+        controlsDiv.appendChild(prevButton);
+        controlsDiv.appendChild(rotateButton);
+        controlsDiv.appendChild(nextButton);
+        modal.appendChild(modalImg);
+        modal.appendChild(controlsDiv);
+        document.body.appendChild(modal);
+
+        let currentIndex = 0;
+        function updateModalImage() {
+            modalImg.src = "images/" + imageFiles[currentIndex];
+            rotation = 0;
+            modalImg.style.transform = "rotate(0deg)";
+        }
+
+        imageFiles.forEach((file, index) => {
+            let item = document.createElement("div");
+            item.classList.add("finder-item");
+            
+            let img = document.createElement("img");
+            img.src = "images/" + file;
+            img.alt = file;
+            img.loading = "lazy";
+            
+            let label = document.createElement("span");
+            const randomUnicode = () => {
+                let chars = [];
+                for (let i = 0; i < 6; i++) {
+                    chars.push(String.fromCharCode(0x2500 + Math.floor(Math.random() * 96))); 
+                }
+                return chars.join('');
+            };
+            const randomExtensions = [".bin", ".dat", ".sys", ".cfg", ".tmp"];
+            let randomLabel = randomUnicode() + randomExtensions[Math.floor(Math.random() * randomExtensions.length)];
+            label.textContent = randomLabel;
+            
+            item.appendChild(img);
+            item.appendChild(label);
+            finderContent.appendChild(item);
+            
+            img.addEventListener("click", function () {
+                currentIndex = index;
+                updateModalImage();
+                modal.classList.add("active");
+            });
+        });
+        
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.classList.remove("active");
+            }
         });
     </script>
 </head>
