@@ -75,7 +75,7 @@
             padding: 5px;
             cursor: pointer;
         }
-            .modal {
+        .modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -108,6 +108,48 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const finderContent = document.querySelector(".finder-content");
+            const modal = document.createElement("div");
+            modal.classList.add("modal");
+            const modalImg = document.createElement("img");
+            const controlsDiv = document.createElement("div");
+            controlsDiv.classList.add("modal-controls");
+            
+            const prevButton = document.createElement("button");
+            prevButton.textContent = "Previous";
+            prevButton.classList.add("control-button");
+            
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "Next";
+            nextButton.classList.add("control-button");
+            
+            const rotateButton = document.createElement("button");
+            rotateButton.textContent = "Rotate";
+            rotateButton.classList.add("control-button");
+            
+            let currentIndex = 0;
+            let rotation = 0;
+
+            prevButton.addEventListener("click", function () {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                updateModalImage();
+            });
+
+            nextButton.addEventListener("click", function () {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                updateModalImage();
+            });
+
+            rotateButton.addEventListener("click", function () {
+                rotation = (rotation + 90) % 360;
+                modalImg.style.transform = `rotate(${rotation}deg)`;
+            });
+
+            controlsDiv.appendChild(prevButton);
+            controlsDiv.appendChild(rotateButton);
+            controlsDiv.appendChild(nextButton);
+            modal.appendChild(modalImg);
+            modal.appendChild(controlsDiv);
+            document.body.appendChild(modal);
 
             const imageFiles = [
                 "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
@@ -118,7 +160,13 @@
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
             
-            imageFiles.forEach(file => {
+            function updateModalImage() {
+                modalImg.src = "images/" + imageFiles[currentIndex];
+                rotation = 0;
+                modalImg.style.transform = "rotate(0deg)";
+            }
+
+            imageFiles.forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
@@ -127,110 +175,21 @@
                 img.alt = file;
                 img.loading = "lazy";
                 
-                let label = document.createElement("span");
-                const randomUnicode = () => {
-                    let chars = [];
-                    for (let i = 0; i < 6; i++) {
-                        chars.push(String.fromCharCode(0x2500 + Math.floor(Math.random() * 96))); 
-                    }
-                    return chars.join('');
-                };
-                const randomExtensions = [".bin", ".dat", ".sys", ".cfg", ".tmp"];
-                let randomLabel = randomUnicode() + randomExtensions[Math.floor(Math.random() * randomExtensions.length)];
-                label.textContent = randomLabel;
-                
                 item.appendChild(img);
-                item.appendChild(label);
                 finderContent.appendChild(item);
+                
+                img.addEventListener("click", function () {
+                    currentIndex = index;
+                    updateModalImage();
+                    modal.classList.add("active");
+                });
             });
-        });
-        document.addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-        });
-        document.addEventListener("dragstart", function (event) {
-            event.preventDefault();
-        });
-            const modal = document.createElement("div");
-        modal.classList.add("modal");
-        const modalImg = document.createElement("img");
-        const controlsDiv = document.createElement("div");
-        controlsDiv.classList.add("modal-controls");
-
-        const prevButton = document.createElement("button");
-        prevButton.textContent = "Previous";
-        prevButton.classList.add("control-button");
-        prevButton.addEventListener("click", function () {
-            currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-            updateModalImage();
-        });
-
-        const nextButton = document.createElement("button");
-        nextButton.textContent = "Next";
-        nextButton.classList.add("control-button");
-        nextButton.addEventListener("click", function () {
-            currentIndex = (currentIndex + 1) % imageFiles.length;
-            updateModalImage();
-        });
-
-        const rotateButton = document.createElement("button");
-        rotateButton.textContent = "Rotate";
-        rotateButton.classList.add("control-button");
-        let rotation = 0;
-        rotateButton.addEventListener("click", function () {
-            rotation = (rotation + 90) % 360;
-            modalImg.style.transform = `rotate(${rotation}deg)`;
-        });
-
-        controlsDiv.appendChild(prevButton);
-        controlsDiv.appendChild(rotateButton);
-        controlsDiv.appendChild(nextButton);
-        modal.appendChild(modalImg);
-        modal.appendChild(controlsDiv);
-        document.body.appendChild(modal);
-
-        let currentIndex = 0;
-        function updateModalImage() {
-            modalImg.src = "images/" + imageFiles[currentIndex];
-            rotation = 0;
-            modalImg.style.transform = "rotate(0deg)";
-        }
-
-        imageFiles.forEach((file, index) => {
-            let item = document.createElement("div");
-            item.classList.add("finder-item");
             
-            let img = document.createElement("img");
-            img.src = "images/" + file;
-            img.alt = file;
-            img.loading = "lazy";
-            
-            let label = document.createElement("span");
-            const randomUnicode = () => {
-                let chars = [];
-                for (let i = 0; i < 6; i++) {
-                    chars.push(String.fromCharCode(0x2500 + Math.floor(Math.random() * 96))); 
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.classList.remove("active");
                 }
-                return chars.join('');
-            };
-            const randomExtensions = [".bin", ".dat", ".sys", ".cfg", ".tmp"];
-            let randomLabel = randomUnicode() + randomExtensions[Math.floor(Math.random() * randomExtensions.length)];
-            label.textContent = randomLabel;
-            
-            item.appendChild(img);
-            item.appendChild(label);
-            finderContent.appendChild(item);
-            
-            img.addEventListener("click", function () {
-                currentIndex = index;
-                updateModalImage();
-                modal.classList.add("active");
             });
-        });
-        
-        modal.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                modal.classList.remove("active");
-            }
         });
     </script>
 </head>
@@ -239,14 +198,7 @@
         <h1>stankyleg</h1>
         <p>By Indigo</p>
         <div class="finder-container">
-            <div class="finder-titlebar">
-                <div class="finder-buttons">
-                    <div class="finder-button close"></div>
-                    <div class="finder-button minimize"></div>
-                    <div class="finder-button maximize"></div>
-                </div>
-                <span>Finder - Images</span>
-            </div>
+            <div class="finder-titlebar">Finder - Images</div>
             <div class="finder-content"></div>
         </div>
     </div>
