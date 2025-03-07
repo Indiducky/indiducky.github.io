@@ -65,6 +65,26 @@
         .close { background: red; }
         .minimize { background: yellow; }
         .maximize { background: green; }
+        .finder-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 10px;
+            gap: 10px;
+        }
+        .finder-item {
+            width: 120px;
+            text-align: center;
+        }
+        .finder-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #000;
+            background: #fff;
+            padding: 5px;
+            cursor: pointer;
+        }
         .modal {
             display: none;
             position: fixed;
@@ -83,63 +103,27 @@
             max-height: 80%;
             border-radius: 10px;
         }
-        .modal-controls {
+        .modal.active {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .control-button {
-            padding: 8px 12px;
-            background: #c0c0c0;
-            border: 2px solid #000;
-            cursor: pointer;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const finder = document.querySelector('.finder-container');
-            let isDragging = false, offsetX, offsetY;
-
-            finder.addEventListener('mousedown', function (e) {
-                isDragging = true;
-                offsetX = e.clientX - finder.offsetLeft;
-                offsetY = e.clientY - finder.offsetTop;
-            });
-            document.addEventListener('mousemove', function (e) {
-                if (isDragging) {
-                    finder.style.left = `${e.clientX - offsetX}px`;
-                    finder.style.top = `${e.clientY - offsetY}px`;
-                }
-            });
-            document.addEventListener('mouseup', function () { isDragging = false; });
-        });
-            document.addEventListener("DOMContentLoaded", function () {
-            const imageFiles = [
-                "2TDXMeY8.webp",
-                "000049310011.webp",
-                "000049310016.webp",
-                "000049310022.webp",
-                "000049310028.webp",
-                "000049310029.webp",
-                "000049310033.webp",
-                "bkWweT-U.webp",
-                "fIFTLJxY.webp",
-                "HO3hKUzI.webp",
-                "iGTjj7wg.webp",
-                "JyK21jKU.webp",
-                "MaxspS5I.webp",
-                "nLWlXSUc.webp",
-                "oPFnLqOY.webp",
-                "pgx8bAXY.webp",
-                "qVPbXMno.webp",
-                "qZ64hPi4.webp",
-                "s5t_gCQs.webp",
-                "sff4JKqo.webp",
-                "SjuUGldM.webp",
-                "u-yKrfnY.webp"
-            ];
-            
             const finderContent = document.querySelector(".finder-content");
+            const modal = document.createElement("div");
+            modal.classList.add("modal");
+            const modalImg = document.createElement("img");
+            modal.appendChild(modalImg);
+            document.body.appendChild(modal);
+
+            const imageFiles = [
+                "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
+                "000049310028.webp", "000049310029.webp", "000049310033.webp", "bkWweT-U.webp",
+                "fIFTLJxY.webp", "HO3hKUzI.webp", "iGTjj7wg.webp", "JyK21jKU.webp",
+                "MaxspS5I.webp", "nLWlXSUc.webp", "oPFnLqOY.webp", "pgx8bAXY.webp",
+                "qVPbXMno.webp", "qZ64hPi4.webp", "s5t_gCQs.webp", "sff4JKqo.webp",
+                "SjuUGldM.webp", "u-yKrfnY.webp"
+            ];
             
             imageFiles.forEach(file => {
                 let item = document.createElement("div");
@@ -149,29 +133,27 @@
                 img.src = "images/" + file;
                 img.alt = file;
                 img.loading = "lazy";
-                img.style.width = "100px";
-                img.style.height = "100px";
-                img.style.objectFit = "cover";
-                img.style.border = "2px solid #000";
-                img.style.background = "#fff";
-                img.style.padding = "5px";
                 
                 let label = document.createElement("span");
                 label.textContent = file;
-                label.style.display = "block";
-                label.style.fontSize = "12px";
-                label.style.marginTop = "5px";
-                label.style.color = "#000";
                 
                 item.appendChild(img);
                 item.appendChild(label);
                 finderContent.appendChild(item);
+                
+                img.addEventListener("click", function () {
+                    modalImg.src = this.src;
+                    modal.classList.add("active");
+                });
+            });
+            
+            modal.addEventListener("click", function () {
+                modal.classList.remove("active");
             });
         });
     </script>
 </head>
 <body>
-    <div class="loading-indicator"></div>
     <div style="padding: 10px;">
         <h1>stankyleg</h1>
         <p>By Indigo</p>
