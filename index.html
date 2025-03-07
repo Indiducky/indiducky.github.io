@@ -103,6 +103,34 @@
                 img.src = "images/" + file;
                 img.alt = "Photo";
                 img.loading = "lazy";
+
+                // Read EXIF data and auto-rotate
+                img.onload = function () {
+                    EXIF.getData(img, function () {
+                        let orientation = EXIF.getTag(this, "Orientation");
+                        let rotateDegree = 0;
+
+                        switch (orientation) {
+                            case 3: // Upside down
+                                rotateDegree = 180;
+                                break;
+                            case 6: // Rotated 90° right
+                                rotateDegree = 90;
+                                break;
+                            case 8: // Rotated 90° left
+                                rotateDegree = -90;
+                                break;
+                        }
+
+                        if (rotateDegree !== 0) {
+                            img.style.transform = `rotate(${rotateDegree}deg)`;
+                        }
+                    });
+                };
+                let img = document.createElement("img");
+                img.src = "images/" + file;
+                img.alt = "Photo";
+                img.loading = "lazy";
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
                     modal.classList.add("active");
@@ -115,6 +143,7 @@
             });
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 </head>
 <body>
     <div style="padding: 10px;">
