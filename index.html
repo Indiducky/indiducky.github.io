@@ -67,6 +67,9 @@
         .modal.active {
             display: flex;
         }
+        .modal img.rotate-90 {
+            transform: rotate(90deg);
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -123,6 +126,11 @@
 
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
+                    if (rotatedImages.includes(file)) {
+                        modalImg.classList.add("rotate-90");
+                    } else {
+                        modalImg.classList.remove("rotate-90");
+                    }
                     modal.classList.add("active");
                 });
                 gallery.appendChild(img);
@@ -130,6 +138,7 @@
 
             modal.addEventListener("click", function () {
                 modal.classList.remove("active");
+                modalImg.classList.remove("rotate-90");
             });
         });
     </script>
