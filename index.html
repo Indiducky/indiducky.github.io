@@ -165,13 +165,13 @@
                 img.addEventListener("click", function () {
                     currentIndex = index;
                     updateModalImage();
-                    modal.classList.add("active");
+                    modal.style.display = "flex";
                 });
             });
             
             modal.addEventListener("click", function (event) {
                 if (event.target === modal) {
-                    modal.classList.remove("active");
+                    modal.style.display = "none";
                 }
             });
         });
