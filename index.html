@@ -104,6 +104,17 @@
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("keydown", function (event) {
+                if (modal.classList.contains("active")) {
+                    if (event.key === "ArrowRight") {
+                        currentIndex = (currentIndex + 1) % imageFiles.length;
+                        updateModalImage();
+                    } else if (event.key === "ArrowLeft") {
+                        currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                        updateModalImage();
+                    }
+                }
+            });
             const imageFiles = [
                 "2TDXMeY8.webp",
                 "000049310011.webp",
@@ -209,7 +220,7 @@
 </head>
 <body>
     <div style="padding: 10px;">
-        <h1>STANKYLEG</h1>
+        <h1>stankyleg</h1>
         <p>By Indigo</p>
         <div class="finder-container">
             <div class="finder-toolbar">Finder - Images</div>
