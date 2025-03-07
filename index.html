@@ -62,10 +62,6 @@
             margin-top: 5px;
             color: #000;
         }
-        .rotate-90 {
-            transform: rotate(-90deg);
-            display: inline-block;
-        }
         .modal {
             display: none;
             position: fixed;
@@ -85,9 +81,6 @@
         }
         .modal.active {
             display: flex;
-        }
-        .modal img.rotate-90 {
-            transform: rotate(-90deg);
         }
     </style>
     <script>
@@ -116,15 +109,6 @@
                 "SjuUGldM.webp",
                 "u-yKrfnY.webp"
             ];
-            const rotatedImages = [
-                "000049310016.webp",
-                "000049310022.webp",
-                "000049310028.webp",
-                "000049310029.webp",
-                "000049310033.webp",
-                "JyK21jKU.webp",
-                "pgx8bAXY.webp"
-            ];
             
             const finderContent = document.querySelector(".finder-content");
             const modal = document.createElement("div");
@@ -142,10 +126,6 @@
                 img.alt = file;
                 img.loading = "lazy";
                 
-                if (rotatedImages.includes(file)) {
-                    img.classList.add("rotate-90");
-                }
-                
                 let label = document.createElement("span");
                 label.textContent = file;
                 
@@ -154,11 +134,6 @@
                 
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
-                    if (rotatedImages.includes(file)) {
-                        modalImg.classList.add("rotate-90");
-                    } else {
-                        modalImg.classList.remove("rotate-90");
-                    }
                     modal.classList.add("active");
                 });
                 
@@ -167,7 +142,6 @@
 
             modal.addEventListener("click", function () {
                 modal.classList.remove("active");
-                modalImg.classList.remove("rotate-90");
             });
         });
     </script>
