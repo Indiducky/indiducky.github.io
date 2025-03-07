@@ -21,19 +21,16 @@
             color: #000;
         }
         .finder-container {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60%; max-width: 800px;
-            top: 50px;
-            left: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 80%;
-            margin: auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            max-width: 800px;
             background: #d9d9d9;
             border: 3px solid #000;
             padding: 10px;
             box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
-            cursor: move;
         }
         .finder-titlebar {
             display: flex;
@@ -42,7 +39,6 @@
             padding: 5px;
             border-bottom: 2px solid #000;
             width: 100%;
-            cursor: grab;
         }
         .finder-buttons {
             display: flex;
@@ -62,7 +58,7 @@
         .finder-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: center;
             padding: 10px;
             gap: 10px;
         }
@@ -79,73 +75,10 @@
             padding: 5px;
             cursor: pointer;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .modal img {
-            max-width: 60%;
-            max-height: 60%;
-            border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
-            position: relative;
-            z-index: 5;
-        }
-        .modal.active {
-            display: flex;
-        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const finderContent = document.querySelector(".finder-content");
-            const modal = document.createElement("div");
-            modal.classList.add("modal");
-            const modalImg = document.createElement("img");
-            modal.appendChild(modalImg);
-            const controlsDiv = document.createElement("div");
-            controlsDiv.classList.add("modal-controls");
-            controlsDiv.style.position = "relative";
-            controlsDiv.style.zIndex = "10";
-
-            const prevButton = document.createElement("button");
-            prevButton.textContent = "Previous";
-            prevButton.classList.add("control-button");
-            prevButton.addEventListener("click", function () {
-                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-                updateModalImage();
-            });
-
-            const nextButton = document.createElement("button");
-            nextButton.textContent = "Next";
-            nextButton.classList.add("control-button");
-            nextButton.addEventListener("click", function () {
-                currentIndex = (currentIndex + 1) % imageFiles.length;
-                updateModalImage();
-            });
-
-            const rotateButton = document.createElement("button");
-            rotateButton.textContent = "Rotate";
-            rotateButton.classList.add("control-button");
-            let rotation = 0;
-            rotateButton.addEventListener("click", function () {
-                rotation = (rotation + 90) % 360;
-                modalImg.style.transform = `rotate(${rotation}deg)`;
-            });
-
-            controlsDiv.appendChild(prevButton);
-            controlsDiv.appendChild(rotateButton);
-            controlsDiv.appendChild(nextButton);
-            modal.appendChild(controlsDiv);
-            document.body.appendChild(modal);
 
             const imageFiles = [
                 "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
@@ -156,15 +89,7 @@
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
             
-            let currentIndex = 0;
-
-            function updateModalImage() {
-                modalImg.src = "images/" + imageFiles[currentIndex];
-                rotation = 0;
-                modalImg.style.transform = "rotate(0deg)";
-            }
-
-            imageFiles.forEach((file, index) => {
+            imageFiles.forEach(file => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
@@ -188,22 +113,9 @@
                 item.appendChild(img);
                 item.appendChild(label);
                 finderContent.appendChild(item);
-                
-                img.addEventListener("click", function () {
-                    currentIndex = index;
-                    updateModalImage();
-                    modalImg.src = this.src;
-                    modal.classList.add("active");
-                });
-            });
-            
-            modal.addEventListener("click", function (event) {
-                if (event.target === modal) {
-                    modal.classList.remove("active");
-                }
             });
         });
-            document.addEventListener("contextmenu", function (event) {
+        document.addEventListener("contextmenu", function (event) {
             event.preventDefault();
         });
         document.addEventListener("dragstart", function (event) {
