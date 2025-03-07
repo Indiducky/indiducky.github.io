@@ -73,6 +73,7 @@
             background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         .modal img {
             max-width: 90%;
@@ -81,6 +82,17 @@
         }
         .modal.active {
             display: flex;
+        }
+        .rotate-button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #c0c0c0;
+            border: 2px solid #000;
+            cursor: pointer;
+            font-family: "MingLiU", serif;
+        }
+        .rotate-button:hover {
+            background: #a0a0a0;
         }
     </style>
     <script>
@@ -114,7 +126,18 @@
             const modal = document.createElement("div");
             modal.classList.add("modal");
             const modalImg = document.createElement("img");
+            const rotateButton = document.createElement("button");
+            rotateButton.textContent = "Rotate";
+            rotateButton.classList.add("rotate-button");
+            let rotation = 0;
+            
+            rotateButton.addEventListener("click", function () {
+                rotation = (rotation + 90) % 360;
+                modalImg.style.transform = `rotate(${rotation}deg)`;
+            });
+            
             modal.appendChild(modalImg);
+            modal.appendChild(rotateButton);
             document.body.appendChild(modal);
 
             imageFiles.forEach(file => {
@@ -134,6 +157,8 @@
                 
                 img.addEventListener("click", function () {
                     modalImg.src = this.src;
+                    modalImg.style.transform = "rotate(0deg)";
+                    rotation = 0;
                     modal.classList.add("active");
                 });
                 
