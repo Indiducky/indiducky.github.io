@@ -9,13 +9,7 @@
         body {
             font-family: 'VT323', sans-serif;
             text-align: center;
-            background: repeating-linear-gradient(
-                45deg,
-                #ccc,
-                #ccc 10px,
-                #ddd 10px,
-                #ddd 20px
-            );
+            background: #ffffff;
             color: #000;
             margin: 0;
             padding: 0;
@@ -180,7 +174,16 @@
                 img.loading = "lazy";
                 
                 let label = document.createElement("span");
-                label.textContent = file;
+                const randomUnicode = () => {
+                    let chars = [];
+                    for (let i = 0; i < 6; i++) {
+                        chars.push(String.fromCharCode(0x2500 + Math.floor(Math.random() * 96))); 
+                    }
+                    return chars.join('');
+                };
+                const randomExtensions = [".bin", ".dat", ".sys", ".cfg", ".tmp"];
+                let randomLabel = randomUnicode() + randomExtensions[Math.floor(Math.random() * randomExtensions.length)];
+                label.textContent = randomLabel;
                 
                 item.appendChild(img);
                 item.appendChild(label);
