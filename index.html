@@ -83,15 +83,19 @@
         .modal.active {
             display: flex;
         }
-        .rotate-button {
+        .modal-controls {
+            display: flex;
+            gap: 10px;
             margin-top: 10px;
+        }
+        .control-button {
             padding: 8px 12px;
             background: #c0c0c0;
             border: 2px solid #000;
             cursor: pointer;
             font-family: "MingLiU", serif;
         }
-        .rotate-button:hover {
+        .control-button:hover {
             background: #a0a0a0;
         }
     </style>
@@ -122,25 +126,47 @@
                 "u-yKrfnY.webp"
             ];
             
+            let currentIndex = 0;
             const finderContent = document.querySelector(".finder-content");
             const modal = document.createElement("div");
             modal.classList.add("modal");
             const modalImg = document.createElement("img");
+            const controlsDiv = document.createElement("div");
+            controlsDiv.classList.add("modal-controls");
+
+            const prevButton = document.createElement("button");
+            prevButton.textContent = "Previous";
+            prevButton.classList.add("control-button");
+            prevButton.addEventListener("click", function () {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                modalImg.src = "images/" + imageFiles[currentIndex];
+            });
+
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "Next";
+            nextButton.classList.add("control-button");
+            nextButton.addEventListener("click", function () {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                modalImg.src = "images/" + imageFiles[currentIndex];
+            });
+
             const rotateButton = document.createElement("button");
             rotateButton.textContent = "Rotate";
-            rotateButton.classList.add("rotate-button");
+            rotateButton.classList.add("control-button");
             let rotation = 0;
-            
             rotateButton.addEventListener("click", function () {
                 rotation = (rotation + 90) % 360;
                 modalImg.style.transform = `rotate(${rotation}deg)`;
             });
-            
+
+            controlsDiv.appendChild(prevButton);
+            controlsDiv.appendChild(rotateButton);
+            controlsDiv.appendChild(nextButton);
             modal.appendChild(modalImg);
-            modal.appendChild(rotateButton);
+            modal.appendChild(controlsDiv);
             document.body.appendChild(modal);
 
-            imageFiles.forEach(file => {
+            imageFiles.forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
@@ -156,6 +182,7 @@
                 item.appendChild(label);
                 
                 img.addEventListener("click", function () {
+                    currentIndex = index;
                     modalImg.src = this.src;
                     modalImg.style.transform = "rotate(0deg)";
                     rotation = 0;
@@ -165,8 +192,10 @@
                 finderContent.appendChild(item);
             });
 
-            modal.addEventListener("click", function () {
-                modal.classList.remove("active");
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.classList.remove("active");
+                }
             });
         });
     </script>
