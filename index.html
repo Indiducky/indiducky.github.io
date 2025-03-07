@@ -40,21 +40,6 @@
             border-bottom: 2px solid #000;
             width: 100%;
         }
-        .finder-buttons {
-            display: flex;
-            gap: 4px;
-            margin-right: 8px;
-        }
-        .finder-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 1px solid #000;
-            display: inline-block;
-        }
-        .close { background: red; }
-        .minimize { background: yellow; }
-        .maximize { background: green; }
         .finder-content {
             display: flex;
             flex-wrap: wrap;
@@ -127,6 +112,7 @@
             rotateButton.classList.add("control-button");
             
             let currentIndex = 0;
+            let rotation = 0;
             const imageFiles = [
                 "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
                 "000049310028.webp", "000049310029.webp", "000049310033.webp", "bkWweT-U.webp",
@@ -135,7 +121,12 @@
                 "qVPbXMno.webp", "qZ64hPi4.webp", "s5t_gCQs.webp", "sff4JKqo.webp",
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
-            let rotation = 0;
+
+            function updateModalImage() {
+                modalImg.src = "images/" + imageFiles[currentIndex];
+                rotation = 0;
+                modalImg.style.transform = "rotate(0deg)";
+            }
 
             prevButton.addEventListener("click", function () {
                 currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
@@ -159,23 +150,6 @@
             modal.appendChild(controlsDiv);
             document.body.appendChild(modal);
 
-            const imageFiles = [
-                "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
-                "000049310028.webp", "000049310029.webp", "000049310033.webp", "bkWweT-U.webp",
-                "fIFTLJxY.webp", "HO3hKUzI.webp", "iGTjj7wg.webp", "JyK21jKU.webp",
-                "MaxspS5I.webp", "nLWlXSUc.webp", "oPFnLqOY.webp", "pgx8bAXY.webp",
-                "qVPbXMno.webp", "qZ64hPi4.webp", "s5t_gCQs.webp", "sff4JKqo.webp",
-                "SjuUGldM.webp", "u-yKrfnY.webp"
-            ];
-            
-            function updateModalImage() {
-                if (imageFiles[currentIndex]) {
-                modalImg.src = "images/" + imageFiles[currentIndex];
-            }
-                rotation = 0;
-                modalImg.style.transform = "rotate(0deg)";
-            }
-
             imageFiles.forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
@@ -191,10 +165,7 @@
                 img.addEventListener("click", function () {
                     currentIndex = index;
                     updateModalImage();
-                    if (imageFiles[currentIndex]) {
-                        updateModalImage();
-                        modal.classList.add("active");
-                    }
+                    modal.classList.add("active");
                 });
             });
             
