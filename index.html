@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             cursor: url('https://cur.cursors-4u.net/cursors/cur-1/cur34.cur'), auto;
+            overflow-x: hidden;
         }
         h1 {
             font-size: 3rem;
@@ -21,16 +22,18 @@
             color: #000;
         }
         .finder-container {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: 10%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%;
+            transform: translate(-50%, 0);
+            width: 90%;
             max-width: 800px;
             background: #d9d9d9;
             border: 3px solid #000;
             padding: 10px;
             box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+            min-height: 60vh;
+            overflow-y: auto;
         }
         .finder-titlebar {
             display: flex;
