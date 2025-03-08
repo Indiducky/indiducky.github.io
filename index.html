@@ -93,11 +93,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const finderContent = document.querySelector(".finder-content");
-            const modal = document.createElement("div");
-            modal.classList.add("modal");
-            const modalImg = document.createElement("img");
-            const controlsDiv = document.createElement("div");
-            controlsDiv.classList.add("modal-controls");
+            const modal = document.querySelector(".modal");
+            const modalImg = document.querySelector("#modal-image");
+            const prevButton = document.querySelector("#prev-button");
+            const nextButton = document.querySelector("#next-button");
+            const rotateButton = document.querySelector("#rotate-button");
+            let currentIndex = 0;
+            let rotation = 0;
             
             const imageFiles = [
                 "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
@@ -108,6 +110,12 @@
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
             
+            function updateModalImage() {
+                modalImg.src = "images/" + imageFiles[currentIndex];
+                rotation = 0;
+                modalImg.style.transform = "rotate(0deg)";
+            }
+
             imageFiles.forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
@@ -121,7 +129,8 @@
                 finderContent.appendChild(item);
                 
                 img.addEventListener("click", function () {
-                    modalImg.src = this.src;
+                    currentIndex = index;
+                    updateModalImage();
                     modal.style.display = "flex";
                 });
             });
@@ -131,49 +140,21 @@
                     modal.style.display = "none";
                 }
             });
-        });
-            const modal = document.querySelector(".modal");
-        const modalImg = document.querySelector("#modal-image");
-        const prevButton = document.querySelector("#prev-button");
-        const nextButton = document.querySelector("#next-button");
-        const rotateButton = document.querySelector("#rotate-button");
-        let currentIndex = 0;
-        let rotation = 0;
 
-        function updateModalImage() {
-            modalImg.src = "images/" + imageFiles[currentIndex];
-            rotation = 0;
-            modalImg.style.transform = "rotate(0deg)";
-        }
-
-        imageFiles.forEach((file, index) => {
-            let img = document.querySelector(`img[src='images/${file}']`);
-            img.addEventListener("click", function () {
-                currentIndex = index;
+            prevButton.addEventListener("click", function () {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
                 updateModalImage();
-                modal.style.display = "flex";
             });
-        });
 
-        modal.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        });
+            nextButton.addEventListener("click", function () {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                updateModalImage();
+            });
 
-        prevButton.addEventListener("click", function () {
-            currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-            updateModalImage();
-        });
-
-        nextButton.addEventListener("click", function () {
-            currentIndex = (currentIndex + 1) % imageFiles.length;
-            updateModalImage();
-        });
-
-        rotateButton.addEventListener("click", function () {
-            rotation = (rotation + 90) % 360;
-            modalImg.style.transform = `rotate(${rotation}deg)`;
+            rotateButton.addEventListener("click", function () {
+                rotation = (rotation + 90) % 360;
+                modalImg.style.transform = `rotate(${rotation}deg)`;
+            });
         });
     </script>
 </head>
