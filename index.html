@@ -74,20 +74,37 @@
             flex-direction: column;
         }
         .modal img {
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 70%;
+            max-height: 70%;
             border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+            z-index: 5;
         }
         .modal-controls {
             display: flex;
             gap: 10px;
             margin-top: 20px;
+            position: absolute;
+            bottom: 20px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
         }
         .control-button {
-            padding: 8px 12px;
-            background: #c0c0c0;
+            padding: 6px 14px;
+            background: #d4d0c8;
             border: 2px solid #000;
             cursor: pointer;
+            font-family: 'VT323', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            box-shadow: 2px 2px 0px #8b8b8b;
+            outline: none;
+        }
+        .control-button:active {
+            box-shadow: inset 2px 2px 0px #8b8b8b;
         }
     </style>
     <script>
@@ -155,6 +172,12 @@
                 rotation = (rotation + 90) % 360;
                 modalImg.style.transform = `rotate(${rotation}deg)`;
             });
+        });
+            document.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+        });
+        document.addEventListener("dragstart", function (event) {
+            event.preventDefault();
         });
     </script>
 </head>
