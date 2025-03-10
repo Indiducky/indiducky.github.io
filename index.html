@@ -110,7 +110,7 @@
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            setTimeout(() => {
+            
             const finderContent = document.querySelector(".finder-content");
             const modal = document.querySelector(".modal");
             const modalImg = document.querySelector("#modal-image");
@@ -135,7 +135,36 @@
                 modalImg.style.transform = "rotate(0deg)";
             }
 
-            imageFiles.slice(0, 10).forEach((file, index) => {
+            imageFiles.forEach((file, index) => {
+                let item = document.createElement("div");
+                item.classList.add("finder-item");
+                
+                let img = document.createElement("img");
+                img.dataset.src = "images/" + file; // Lazy load setup
+                img.alt = file;
+                img.loading = "lazy";
+                img.classList.add("lazy-image");
+                
+                item.appendChild(img);
+                finderContent.appendChild(item);
+            });
+
+            // Lazy Loading using Intersection Observer
+            const lazyImages = document.querySelectorAll(".lazy-image");
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove("lazy-image");
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: "50px" });
+            
+            lazyImages.forEach(img => {
+                observer.observe(img);
+            });
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
