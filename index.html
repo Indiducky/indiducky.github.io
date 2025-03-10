@@ -136,11 +136,40 @@
             }
 
             imageFiles.forEach((file, index) => {
+                let item = document.createElement("div");
+                item.classList.add("finder-item");
                 
+                let img = document.createElement("img");
+                img.src = "images/" + file;
+                img.alt = "Image preview";
+                img.loading = "lazy";
+                img.classList.add("lazy-image");
+                
+                item.appendChild(img);
+                finderContent.appendChild(item);
+
+                img.addEventListener("click", function () {
+                    currentIndex = index;
+                    updateModalImage();
+                    modal.style.display = "flex";
+                });
             });
             
             // Lazy Loading using Intersection Observer
-            const lazyImages = document.querySelectorAll(".lazy-image");
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove("lazy-image");
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: "50px" });
+            
+            document.querySelectorAll(".lazy-image").forEach(img => {
+                observer.observe(img);
+            });
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -157,7 +186,20 @@
             });
 
             // Lazy Loading using Intersection Observer
-            const lazyImages = document.querySelectorAll(".lazy-image");
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove("lazy-image");
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: "50px" });
+            
+            document.querySelectorAll(".lazy-image").forEach(img => {
+                observer.observe(img);
+            });
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
