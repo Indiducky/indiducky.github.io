@@ -159,17 +159,23 @@
                 }
             });
 
-            prevButton.addEventListener("click", function () {
+            prevButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevents double-tap zoom
+                event.stopPropagation();
                 currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
                 updateModalImage();
             });
 
-            nextButton.addEventListener("click", function () {
+            nextButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevents double-tap zoom
+                event.stopPropagation();
                 currentIndex = (currentIndex + 1) % imageFiles.length;
                 updateModalImage();
             });
 
-            rotateButton.addEventListener("click", function () {
+            rotateButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevents double-tap zoom
+                event.stopPropagation();
                 rotation = (rotation + 90) % 360;
                 modalImg.style.transform = `rotate(${rotation}deg)`;
             });
