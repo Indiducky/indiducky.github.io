@@ -12,24 +12,26 @@
             background: #ffffff;
             color: #000;
             margin: 0;
-            padding: 0 10px;
+            padding: 0;
             cursor: url('https://cur.cursors-4u.net/cursors/cur-1/cur34.cur'), auto;
+            overflow-x: hidden;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-transform: lowercase;
             color: #000;
-            margin-top: 20px;
         }
         .finder-container {
             position: relative;
-            margin: 20px auto;
+            margin: 10% auto;
             width: 90%;
             max-width: 800px;
             background: #d9d9d9;
             border: 3px solid #000;
             padding: 10px;
             box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+            min-height: 60vh;
+            overflow-y: auto;
         }
         .finder-titlebar {
             display: flex;
@@ -108,27 +110,16 @@
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
             const finderContent = document.querySelector(".finder-content");
-            const modal = document.createElement("div");
-            modal.classList.add("modal");
-            const modalImg = document.createElement("img");
-            const controlsDiv = document.createElement("div");
-            controlsDiv.classList.add("modal-controls");
-            
-            const prevButton = document.createElement("button");
-            prevButton.textContent = "Previous";
-            prevButton.classList.add("control-button");
-            
-            const nextButton = document.createElement("button");
-            nextButton.textContent = "Next";
-            nextButton.classList.add("control-button");
-            
-            const rotateButton = document.createElement("button");
-            rotateButton.textContent = "Rotate";
-            rotateButton.classList.add("control-button");
-            
+            const modal = document.querySelector(".modal");
+            const modalImg = document.querySelector("#modal-image");
+            const prevButton = document.querySelector("#prev-button");
+            const nextButton = document.querySelector("#next-button");
+            const rotateButton = document.querySelector("#rotate-button");
             let currentIndex = 0;
             let rotation = 0;
+            
             const imageFiles = [
                 "2TDXMeY8.webp", "000049310011.webp", "000049310016.webp", "000049310022.webp",
                 "000049310028.webp", "000049310029.webp", "000049310033.webp", "bkWweT-U.webp",
@@ -137,36 +128,14 @@
                 "qVPbXMno.webp", "qZ64hPi4.webp", "s5t_gCQs.webp", "sff4JKqo.webp",
                 "SjuUGldM.webp", "u-yKrfnY.webp"
             ];
-
+            
             function updateModalImage() {
                 modalImg.src = "images/" + imageFiles[currentIndex];
                 rotation = 0;
                 modalImg.style.transform = "rotate(0deg)";
             }
 
-            prevButton.addEventListener("click", function () {
-                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-                updateModalImage();
-            });
-
-            nextButton.addEventListener("click", function () {
-                currentIndex = (currentIndex + 1) % imageFiles.length;
-                updateModalImage();
-            });
-
-            rotateButton.addEventListener("click", function () {
-                rotation = (rotation + 90) % 360;
-                modalImg.style.transform = `rotate(${rotation}deg)`;
-            });
-
-            controlsDiv.appendChild(prevButton);
-            controlsDiv.appendChild(rotateButton);
-            controlsDiv.appendChild(nextButton);
-            modal.appendChild(modalImg);
-            modal.appendChild(controlsDiv);
-            document.body.appendChild(modal);
-
-            imageFiles.forEach((file, index) => {
+            imageFiles.slice(0, 10).forEach((file, index) => {
                 let item = document.createElement("div");
                 item.classList.add("finder-item");
                 
@@ -190,23 +159,27 @@
                     modal.style.display = "none";
                 }
             });
+
+            prevButton.addEventListener("click", function () {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                updateModalImage();
+            });
+
+            nextButton.addEventListener("click", function () {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                updateModalImage();
+            });
+
+            rotateButton.addEventListener("click", function () {
+                rotation = (rotation + 90) % 360;
+                modalImg.style.transform = `rotate(${rotation}deg)`;
+            });
         });
             document.addEventListener("contextmenu", function (event) {
             event.preventDefault();
         });
         document.addEventListener("dragstart", function (event) {
             event.preventDefault();
-        });
-        document.addEventListener("keydown", function (event) {
-            if (modal.style.display === "flex") {
-                if (event.key === "ArrowRight") {
-                    currentIndex = (currentIndex + 1) % imageFiles.length;
-                    updateModalImage();
-                } else if (event.key === "ArrowLeft") {
-                    currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
-                    updateModalImage();
-                }
-            }
         });
     </script>
 </head>
@@ -215,8 +188,22 @@
         <h1>stankyleg</h1>
         <p>By Indigo</p>
         <div class="finder-container">
-            <div class="finder-titlebar">Finder - Images</div>
+            <div class="finder-titlebar">
+                
+                
+                
+                
+                <span>Finder - Images</span>
+            </div>
             <div class="finder-content"></div>
+        </div>
+    </div>
+    <div class="modal">
+        <img id="modal-image" src="" alt="">
+        <div class="modal-controls">
+            <button class="control-button" id="prev-button">Previous</button>
+            <button class="control-button" id="rotate-button">Rotate</button>
+            <button class="control-button" id="next-button">Next</button>
         </div>
     </div>
 </body>
